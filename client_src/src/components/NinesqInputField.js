@@ -9,7 +9,9 @@ const NinesqInputField = props => <FormControl fullWidth={props.fullWidth}>
       value={props.input.value}
       onChange={props.input.onChange}
     />
-    {props.meta.error ? <FormHelperText>{props.meta.error}</FormHelperText> : ""}
+    {props.meta.touched &&
+      ((props.meta.error && <FormHelperText>{props.meta.error}</FormHelperText>) ||
+      (props.meta.warning && <FormHelperText>{props.meta.error}</FormHelperText>))}
 </FormControl>
 
 NinesqInputField.propTypes = {

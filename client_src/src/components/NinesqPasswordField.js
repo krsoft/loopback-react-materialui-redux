@@ -25,13 +25,11 @@ export class NinesqPasswordField extends Component {
   }
 
   mousemoveListener = (e) => {
-    console.log('mousemove');
     e.stopPropagation ();
     // do whatever is needed while the user is moving the cursor around
   }
 
   mouseupListener = (e) => {
-    console.log('mouseup');
     this.restoreGlobalMouseEvents ();
     document.removeEventListener ('mouseup',   this.mouseupListener,   EventListenerMode);
     document.removeEventListener ('mousemove', this.mousemoveListener, EventListenerMode);
@@ -40,7 +38,6 @@ export class NinesqPasswordField extends Component {
   }
 
   captureMouseEvents = (e) => {
-    console.log('capture mouse');
     this.preventGlobalMouseEvents ();
     document.addEventListener ('mouseup',   this.mouseupListener,   EventListenerMode);
     document.addEventListener ('mousemove', this.mousemoveListener, EventListenerMode);
@@ -63,7 +60,7 @@ export class NinesqPasswordField extends Component {
   };
 
   render() {
-    const { input: { value }, ...props} = this.props;
+    const { input: { value }} = this.props;
     const { showPassword } = this.state;
     return (
       <div>

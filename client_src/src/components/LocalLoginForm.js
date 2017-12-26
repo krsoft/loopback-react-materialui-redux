@@ -23,6 +23,7 @@ import MailOutline from 'material-ui-icons/MailOutline';
 import NinesqTextField from './NinesqTextField';
 import NinesqEmailField from './NinesqEmailField';
 import NinesqPasswordField from './NinesqPasswordField';
+import NineSqValidatorObj from './NineSqValidatorObj';
 
 const styles = theme => ({
   flash_on: {
@@ -89,18 +90,30 @@ export class LocalLoginForm extends Component {
     classes: PropTypes.object.isRequired,
   }
   state = {
-    showPassword: true
+    showPassword: true,
+    // nsvalidator: new NineSqValidatorObj(this.props.dispatch, this.props.translate)
   }
 
   constructor(props) {
     super(props);
 
-    this.props.dispatch(addTranslation(messages));
+    console.log("constructor");
+    // this.props.dispatch(addTranslation(messages));
+
   }
 
-  // componentWillMount = () => {
-  //   this.props.dispatch(addTranslation(messages));
-  // }
+  componentWillMount = () => {
+    console.log("componentWillMount");
+    this.props.dispatch(addTranslation(messages));
+    let nsValidator = new NineSqValidatorObj(this.props.dispatch, this.props.translate);
+    this.setState({nsvalidator: nsValidator});
+  }
+
+  componentDidMount = () => {
+    console.log('componentDidMount');
+    // let nsValidator = new NineSqValidatorObj(this.props.dispatch, this.props.translate);
+    // this.setState({nsvalidator: nsValidator});
+  }
 
   render() {
     const { handleSubmit, pristine, reset, submitting, translate, auth, classes } = this.props;
@@ -110,6 +123,7 @@ export class LocalLoginForm extends Component {
         <div className={classes.fieldOutline}>
           <Field name="myField"
             fullWidth
+            validate={[this.state.nsvalidator.required]}
             component={NinesqEmailField}
             label={translate('LocalLoginForm.email_placeholder')}
             placeholder={translate('LocalLoginForm.email_placeholder')}
@@ -118,6 +132,7 @@ export class LocalLoginForm extends Component {
         <div className={classes.fieldOutline}>
           <Field name="mypassword"
             fullWidth
+            validate={[this.state.nsvalidator.required]}
             component={NinesqPasswordField}
             placeholder={translate('LocalLoginForm.password_placeholder')}
             label={translate('LocalLoginForm.password_placeholder')}
